@@ -45,12 +45,12 @@ router.get("/create/:nsId", async (req, res) => {
     const nsId = req.params.nsId;
     const nsIdConfig = await NSID.findOne({ nsId: nsId });
     if (nsIdConfig) {
-      return res.status(401).json({ message: "Given NS Id already exists." });
+      return res.status(401).json({ message: "Given Network State Id already exists." });
     }
     const newNsIdConfig = await new NSID();
     newNsIdConfig.nsId = nsId;
     await newNsIdConfig.save();
-    res.status(200).json({ message: "NS Id has been created." });
+    res.status(200).json({ message: "Network State Id has been created." });
   } catch (err) {
     console.log(err);
   }
@@ -75,7 +75,7 @@ router.post("/reclaim-url", async (req, res) => {
     const nsId = req.body.nsId;
     const nsIdConfig = await NSID.findOne({ nsId: nsId });
     if (!nsIdConfig) {
-      return res.status(401).json({ message: "Invalid NS Id, please check." });
+      return res.status(401).json({ message: "Invalid Network State Id, please check." });
     }
     const checkId = await createObj();
     const check = await Check.findOne({ checkId: checkId });

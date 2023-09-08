@@ -100,7 +100,7 @@ function App() {
   return (
     <>
       <body class="w-full h-full ">
-      <Toaster />
+        <Toaster />
         <header class="text-gray-600 body-font">
           <div class="container mx-auto flex flex-wrap justify-between p-5 flex-col md:flex-row items-center">
             <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
@@ -109,7 +109,7 @@ function App() {
                 class="w-10 h-10 rounded-full"
               />
 
-              <span class="ml-3 font-bold text-xl">NS.ID</span>
+              <span class="ml-3 font-bold text-xl">Network State ID</span>
             </a>
             <a href="https://www.reclaimprotocol.org/">
               <button class="inline-flex cursor-pointer items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
@@ -123,10 +123,9 @@ function App() {
             <div class="lg:flex-grow md:w-1/2 lg:pr-24 md:pr-16 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center">
 
               <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">
-                Your own NS.ID <br class="hidden lg:inline-block" />A new way to
-                prove Identity using ZK
+                Create a Psuedonymous Profile <br class="hidden lg:inline-block" />
               </h1>
-              <div class="flex w-full sm:flex-row flex-col mx-auto sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-center sm:items-end">
+              {/* <div class="flex w-full sm:flex-row flex-col mx-auto sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-center sm:items-end">
                 <button value='create' class="flex-1 px-4 py-2 bg-indigo-500 text-white hover:bg-indigo-650" onClick={handleCreateSwitch}>
                   Create Profile
                 </button>
@@ -136,9 +135,9 @@ function App() {
                 <button value='join' class="flex-1 px-4 py-2 bg-indigo-500 text-white hover:bg-indigo-650  rounded-l-md" onClick={handleViewSwitch}>
                   View Profile
                 </button>
-              </div>
-              <div class="flex w-full sm:flex-row flex-col my-6 mx-auto sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-center sm:items-end">
-                {(selectedTab === "update") && (
+              </div> */}
+              {/* <div class="flex w-full sm:flex-row flex-col my-6 mx-auto sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-center sm:items-end"> */}
+                {/* {(selectedTab === "update") && (
                   <>
                     <form onSubmit={handleSubmit}>
                       <div class="flex-grow w-full h-full block">
@@ -203,7 +202,27 @@ function App() {
                       </div>
                     </form>
                   </>
-                )}
+                )} */}
+              {/* </div> */}
+              <div class="flex w-full sm:flex-row flex-col my-6 mx-auto sm:space-x-4 sm:space-y-0 space-y-4 sm:px-0 items-center sm:items-end">
+                <form onSubmit={handleSubmit}>
+                  <div class="flex-grow w-full h-full block">
+                    <div class="relative flex-grow w-full h-full my-2">
+                      <label for="provider" class="block mb-2 text-xl font-medium ">
+                        Pick a psuodonym you resonate with
+                      </label>
+                      <input type="text" required placeholder="Enter the NS.ID" onChange={handleNSIDChange} class="bg-gray-50 border border-gray-300 text-gray-900 text-xl py-3  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full sm:h-[60px] p-2.5 " />
+                    </div>
+                  </div>
+                  <div class="flex-grow w-full h-full block mb-2">
+                    <button
+                      onClick={handleCreateClick}
+                      class="text-white sm:h-[55px] bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded-lg text-xl"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </form>
               </div>
             </div>
             <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
@@ -226,7 +245,7 @@ function App() {
               <span class="ml-3 text-xl">Powered by Reclaim</span>
             </a>
             <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
-              NS.ID
+              Network State ID
             </p>
             <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
               <a

@@ -63,7 +63,7 @@ export const View = () => {
                             class="w-10 h-10 rounded-full"
                         />
 
-                        <span class="ml-3 font-bold text-xl">NS.ID</span>
+                        <span class="ml-3 font-bold text-xl">Network State ID</span>
                     </a>
                     <a href="https://www.reclaimprotocol.org/">
                         <button class="inline-flex cursor-pointer items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
@@ -142,37 +142,6 @@ export const View = () => {
                     )}
                 </div>
             </section >
-            <footer class="text-gray-600  body-font">
-                <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
-                    <a class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
-                        <img
-                            class="w-10 h-10 rounded-full"
-                            src="https://assets.website-files.com/63f580596efa74629ceecdf5/646cd0d4bff811689094709c_Reclaim-Logo-Asterisk.jpg"
-                        />
-                        <span class="ml-3 text-xl">Powered by Reclaim</span>
-                    </a>
-                    <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">
-                        NS.ID
-                    </p>
-                    <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
-                        <a
-                            href="https://twitter.com/protocolreclaim"
-                            class="ml-3 text-gray-500"
-                        >
-                            <svg
-                                fill="currentColor"
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                class="w-5 h-5"
-                                viewBox="0 0 24 24"
-                            >
-                                <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
-                            </svg>
-                        </a>
-                    </span>
-                </div>
-            </footer>
         </div >
     );
 };

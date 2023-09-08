@@ -166,7 +166,7 @@ export const AddProof = () => {
                             class="w-10 h-10 rounded-full"
                         />
 
-                        <span class="ml-3 font-bold text-xl">NS.ID?</span>
+                        <span class="ml-3 font-bold text-xl">Network State ID</span>
                     </a>
                     <a href="https://www.reclaimprotocol.org/">
                         <button class="inline-flex cursor-pointer items-center bg-gray-100 border-0 py-1 px-3 focus:outline-none hover:bg-gray-200 rounded text-base mt-4 md:mt-0">
@@ -193,7 +193,7 @@ export const AddProof = () => {
                     <div class="flex lg:w-2/3 w-full sm:flex-row flex-col mx-auto px-8 justify-center  sm:space-x-4 sm:space-y-0 space-y-2 sm:px-0 items-center sm:items-end">
                         <div class="relative flex-grow w-full h-full">
                             <label for="countries" class="block mb-2 text-xl font-medium ">
-                               Attach Credentials to your Psuedonymous Profile
+                                Attach Credentials to your Psuedonymous Profile
                             </label>
                             <Select
                                 isMulti
