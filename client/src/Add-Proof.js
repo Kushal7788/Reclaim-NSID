@@ -180,12 +180,12 @@ export const AddProof = () => {
                 <div class="container px-5 py-24 mx-auto">
                     <div class="flex flex-col text-center w-full mb-12">
                         <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
-                            Prove Identity & Professional Credentials
+                            Verified By Default
                         </h1>
                         {gotValidProof === true && (
                             <>
                                 <p class="sm:text-2xl text-xl font-medium title-font mb-4 text-gray-900">
-                                    Proof Added to your profile!
+                                    Credentials Added to your profile!
                                 </p>
                             </>
                         )}
@@ -193,7 +193,7 @@ export const AddProof = () => {
                     <div class="flex lg:w-2/3 w-full sm:flex-row flex-col mx-auto px-8 justify-center  sm:space-x-4 sm:space-y-0 space-y-2 sm:px-0 items-center sm:items-end">
                         <div class="relative flex-grow w-full h-full">
                             <label for="countries" class="block mb-2 text-xl font-medium ">
-                                Select a Provider
+                               Attach Credentials to your Psuedonymous Profile
                             </label>
                             <Select
                                 isMulti
@@ -231,22 +231,10 @@ export const AddProof = () => {
                                 <QRCodeSVG className="hidden md:block" height={200} width={200} value={claimUrl} />
                                 <div className="flex-row p-5 rounded-lg  gap-4">
                                     <a target="_blank" href={claimUrl}>
-                                        <button class="  text-white w-full bg-indigo-500 border-0 py-2 px-6 focus:outline-none m-2 hover:bg-indigo-600 rounded-xl text-lg">
-                                            Open Magic Link ✨{" "}
+                                        <button class="text-white w-full bg-indigo-500 border-0 py-2 px-6 focus:outline-none m-2 hover:bg-indigo-600 rounded-xl text-lg">
+                                            Tap to Create Proof
                                         </button>
                                     </a>
-                                    <button
-                                        onClick={() => handleCopyLink(claimUrl)}
-                                        class="  text-gray-700 w-full bg-gray-100 border-0 py-2 px-6 focus:outline-none m-2 hover:bg-gray-200 rounded-xl text-lg"
-                                    >
-                                        Copy Reclaim Magic Link ✨
-                                    </button>
-                                    <button
-                                        onClick={handleGoBack}
-                                        class="text-black sm:h-[60px] bg-gray-100 border-0 py-2 px-8 focus:outline-none hover:bg-gray-200 rounded-lg text-xl mx-2"
-                                    >
-                                        Home
-                                    </button>
                                 </div>
                             </div>
                         )}
