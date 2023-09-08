@@ -1,0 +1,14 @@
+{
+    "google-login":{
+        "param1":"emailAddress"
+    },
+    "outlook-login":{
+        "param1":"emailAddress"
+    },
+    "godaddy-login":{
+        "param1":"emailAddress"
+    },
+    "zoho-email":{
+        "param1":"email"
+    }
+}
