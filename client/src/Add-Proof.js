@@ -97,7 +97,6 @@ export const AddProof = () => {
             console.log(err);
         }
     };
-
     const fetchData = async () => {
         try {
             const response = await fetch(`${apiUrl}/fetch-check/${checkId}`);
