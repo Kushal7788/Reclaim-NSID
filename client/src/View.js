@@ -159,7 +159,7 @@ export const View = () => {
                                             onClick={() => toggleCollapse(index)}
                                         >
                                             <h2
-                                                className="text-lg font-semibold"
+                                                className="text-lg font-semibold truncate style={{ maxWidth: '80%' }}"
                                                 dangerouslySetInnerHTML={{ __html: `${proof.provider} <br /> ${proof.parameters}` }}
                                             />
                                             {/* <h2 className="text-lg font-semibold">{proof.provider}</h2> */}
@@ -179,40 +179,37 @@ export const View = () => {
                                             </svg>
                                         </div>
                                         {collapsedCards[index] && (
-                                            <div className="flex flex-col justify-center items-center gap-4 text-center w-full mt-12">
+                                            <div className="flex flex-col justify-center items-center gap-4 text-center w-full mt-12  style={{ maxWidth: '100%', overflowWrap: 'break-word' }}">
                                                 <h1 className="text-2xl font-medium title-font">Provider: {proof.provider}</h1>
                                                 <p>
-                                                    <span className="font-bold">Claim Id:</span> {proof.templateClaimId}
+                                                    <span className="font-bold  truncate style={{ maxWidth: '80%' }}">Claim Id:</span> {proof.templateClaimId}
                                                 </p>
                                                 <p>
-                                                    <span className="font-bold">Parameters:</span> {proof.parameters}
+                                                    <span className="font-bold  truncate style={{ maxWidth: '80%' }}">Parameters:</span> {proof.parameters}
                                                 </p>
                                                 <p>
-                                                    <span className="font-bold">Owner Public Key:</span> {proof.ownerPublicKey}
+                                                    <span className="font-bold truncate style={{ maxWidth: '80%' }}">Owner Public Key:</span> {proof.ownerPublicKey}
                                                 </p>
                                                 <p>
-                                                    <span className="font-bold">Timestamp:</span> {proof.timestampS}
+                                                    <span className="font-bold truncate style={{ maxWidth: '80%' }}">Timestamp:</span> {proof.timestampS}
                                                 </p>
                                                 <p>
-                                                    <span className="font-bold">Witness Addresses:</span> {proof.witnessAddresses}
+                                                    <span className="font-bold truncate style={{ maxWidth: '80%' }}">Witness Addresses:</span> {proof.witnessAddresses}
                                                 </p>
                                                 <p>
-                                                    <span className="font-bold">Signatures:</span> {proof.signatures}
+                                                    <span className="font-bold truncate style={{ maxWidth: '80%' }}">Signatures:</span> {proof.signatures}
                                                 </p>
                                                 <p>
-                                                    <span className="font-bold">Redacted Parameters:</span> {proof.redactedParameters}
+                                                    <span className="font-bold truncate style={{ maxWidth: '80%' }}">Redacted Parameters:</span> {proof.redactedParameters}
                                                 </p>
                                                 <p>
-                                                    <span className="font-bold">Context:</span> {proof.context}
+                                                    <span className="font-bold truncate style={{ maxWidth: '80%' }}">Context:</span> {proof.context}
                                                 </p>
                                                 <p>
-                                                    <span className="font-bold">Epoch:</span> {proof.epoch}
+                                                    <span className="font-bold truncate style={{ maxWidth: '80%' }}">Epoch:</span> {proof.epoch}
                                                 </p>
                                                 <p>
-                                                    <span className="font-bold">Identifier:</span> {proof.identifier}
-                                                </p>
-                                                <p>
-                                                    <span className="font-bold">---------------------------------</span>
+                                                    <span className="font-bold truncate style={{ maxWidth: '80%' }}">Identifier:</span> {proof.identifier}
                                                 </p>
                                             </div>
                                         )}
