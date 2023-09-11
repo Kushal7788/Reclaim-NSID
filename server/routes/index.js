@@ -160,7 +160,7 @@ router.post("/update/proof", async (req, res) => {
                 <!-- Credentials of NS.ID -->
                 <div class="flex flex-col text-center w-full mb-12">
                     <h3 class="text-2xl font-medium title-font mb-4 text-gray-900">
-                        Profile of ${check.data.nsId} is ready!
+                        Your Psuedonymous Profile is ready!
                     </h3>
                 </div>
 
