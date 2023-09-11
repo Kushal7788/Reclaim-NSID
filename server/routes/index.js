@@ -125,7 +125,99 @@ router.post("/update/proof", async (req, res) => {
       proofs: check.data.proofs,
     };
     await nsId.save();
-    res.status(201).send("<h1>Proofs has been shared with the Requestor. \n You can exit the screen</h1>");
+    const url = process.env.CLIENT_URL + "/view/" + check.data.nsId;
+    const htmlPage = `
+    <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network State ID</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header class="bg-light border mb-3 p-3">
+            <div class="container d-flex justify-content-between align-items-center">
+                <a class="d-flex align-items-center text-decoration-none" href="#">
+                    <img src="https://assets.website-files.com/63f580596efa74629ceecdf5/646cd0d4bff811689094709c_Reclaim-Logo-Asterisk.jpg"
+                        alt="Logo" class="rounded-circle" width="50" height="50">
+                    <span class="ml-3 font-weight-bold text-xl">Network State ID</span>
+                </a>
+                <a href="https://www.reclaimprotocol.org/">
+                    <button class="btn btn-light">
+                        🔗 Reclaim Protocol
+                    </button>
+                </a>
+            </div>
+        </header>
+
+        <section class="text-gray-600 body-font">
+            <div class="container px-5 py-24 mx-auto">
+
+                <!-- Credentials of NS.ID -->
+                <div class="flex flex-col text-center w-full mb-12">
+                    <h3 class="text-2xl font-medium title-font mb-4 text-gray-900">
+                        Profile of ${check.data.nsId} is ready!
+                    </h3>
+                </div>
+
+                <!-- Proof data -->
+                <div class="flex flex-col text-center w-full mb-12">
+                    <div class="flex justify-center">
+                        <button onclick="copyToClipboard('${url}')"
+                            class="btn btn-primary inline-flex text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded text-lg">
+                            Copy Profile link
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Add Bootstrap JS and Popper.js (required for Bootstrap) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function copyToClipboard(link) {
+            // Create a temporary input element
+            const tempInput = document.createElement('input');
+
+            // Set the input's value to the link you want to copy
+            tempInput.value = link;
+
+            // Append the input element to the document
+            document.body.appendChild(tempInput);
+
+            // Select the input's text
+            tempInput.select();
+
+            // Copy the selected text to the clipboard
+            document.execCommand('copy');
+
+            // Remove the temporary input element
+            document.body.removeChild(tempInput);
+
+            // Optionally, you can provide some user feedback
+            alert('Link copied to clipboard: ' + link);
+        }
+    </script>
+
+    <!-- JavaScript function to toggle card collapse -->
+    <script>
+        function toggleCollapse(index) {
+            const card = document.querySelectorAll('.card')[index];
+            card.querySelector('.collapse').classList.toggle('show');
+        }
+    </script>
+
+</html>
+    `
+    res.status(201).send(htmlPage);
   } catch (err) {
     console.log(err);
   }

@@ -9,6 +9,8 @@ export const View = () => {
     let { nsid } = useParams();
     const [proofData, setProofData] = useState(null);
     const [isVerified, setIsVerified] = useState(null);
+    const [collapsedCards, setCollapsedCards] = useState({});
+
     const navigate = useNavigate();
 
     const checkNSID = async () => {
@@ -40,6 +42,15 @@ export const View = () => {
     const handleGoBack = () => {
         navigate(`/`);
     }
+
+
+    const toggleCollapse = (index) => {
+        setCollapsedCards({
+            ...collapsedCards,
+            [index]: !collapsedCards[index],
+        });
+    };
+
 
     useEffect(() => {
         checkNSID();
@@ -88,10 +99,10 @@ export const View = () => {
                         <>
                             <div class="flex flex-col text-center w-full mb-12">
                                 <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
-                                    Proofs for {nsid} NS.ID
+                                    Credentials of {nsid} ID
                                 </h1>
                             </div>
-                            <div className="flex flex-col justify-center items-center gap-4 text-center w-full mt-12">
+                            {/* <div className="flex flex-col justify-center items-center gap-4 text-center w-full mt-12">
                                 {proofData.proofs.map((proof) => (
                                     <div className="flex flex-col justify-center items-center gap-4 text-center w-full mt-12">
                                         <h1 className="text-2xl font-medium title-font">Provider: {proof.provider}</h1>
@@ -136,6 +147,77 @@ export const View = () => {
                                 >
                                     Home
                                 </button>
+                            </div> */}
+                            <div className="p-4">
+                                {proofData.proofs.map((proof, index) => (
+                                    <div
+                                        key={index}
+                                        className="bg-gray-100 rounded-lg shadow-md p-4 mb-4"
+                                    >
+                                        <div
+                                            className="flex justify-between items-center cursor-pointer"
+                                            onClick={() => toggleCollapse(index)}
+                                        >
+                                            <h2
+                                                className="text-lg font-semibold"
+                                                dangerouslySetInnerHTML={{ __html: `${proof.provider} <br /> ${proof.parameters}` }}
+                                            />
+                                            {/* <h2 className="text-lg font-semibold">{proof.provider}</h2> */}
+                                            {/* <h2 className="text-lg font-semibold">{proof.parameters}</h2> */}
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                className={`w-6 h-6 transition-transform transform ${collapsedCards[index] ? 'rotate-180' : 'rotate-0'
+                                                    }`}
+                                                viewBox="0 0 20 20"
+                                                fill="currentColor"
+                                            >
+                                                <path
+                                                    fillRule="evenodd"
+                                                    d="M6.293 5.293a1 1 0 011.414 0L10 8.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+                                                    clipRule="evenodd"
+                                                />
+                                            </svg>
+                                        </div>
+                                        {collapsedCards[index] && (
+                                            <div className="flex flex-col justify-center items-center gap-4 text-center w-full mt-12">
+                                                <h1 className="text-2xl font-medium title-font">Provider: {proof.provider}</h1>
+                                                <p>
+                                                    <span className="font-bold">Claim Id:</span> {proof.templateClaimId}
+                                                </p>
+                                                <p>
+                                                    <span className="font-bold">Parameters:</span> {proof.parameters}
+                                                </p>
+                                                <p>
+                                                    <span className="font-bold">Owner Public Key:</span> {proof.ownerPublicKey}
+                                                </p>
+                                                <p>
+                                                    <span className="font-bold">Timestamp:</span> {proof.timestampS}
+                                                </p>
+                                                <p>
+                                                    <span className="font-bold">Witness Addresses:</span> {proof.witnessAddresses}
+                                                </p>
+                                                <p>
+                                                    <span className="font-bold">Signatures:</span> {proof.signatures}
+                                                </p>
+                                                <p>
+                                                    <span className="font-bold">Redacted Parameters:</span> {proof.redactedParameters}
+                                                </p>
+                                                <p>
+                                                    <span className="font-bold">Context:</span> {proof.context}
+                                                </p>
+                                                <p>
+                                                    <span className="font-bold">Epoch:</span> {proof.epoch}
+                                                </p>
+                                                <p>
+                                                    <span className="font-bold">Identifier:</span> {proof.identifier}
+                                                </p>
+                                                <p>
+                                                    <span className="font-bold">---------------------------------</span>
+                                                </p>
+                                            </div>
+                                        )}
+                                    </div>
+                                ))}
                             </div>
 
                         </>
