@@ -11,10 +11,12 @@ import {
 } from '@chakra-ui/react'
 
 
-export const View = () => {
-    const apiUrl = process.env.REACT_APP_API_URL;
-    const { isOpen, onOpen, onClose } = useDisclosure();
+export const ProofView = () => {
     let { nsid } = useParams();
+    const apiUrl = process.env.REACT_APP_API_URL;
+    const clientUrl = process.env.REACT_APP_CLIENT_URL;
+    const profileLink = `${clientUrl}/view/${nsid}`;
+    const { isOpen, onOpen, onClose } = useDisclosure();
     const [proofData, setProofData] = useState(null);
     const [isVerified, setIsVerified] = useState(null);
     const [collapsedCards, setCollapsedCards] = useState({});
@@ -66,6 +68,27 @@ export const View = () => {
     const closeModal = () => {
         setSelectedProof(null);
         setIsModalOpen(false);
+    };
+
+    const handleShare = async () => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title: "Share verification link",
+                    text: "verification link",
+                    url: `${profileLink}`,
+                });
+            } catch (err) {
+                console.log(err);
+            }
+        } else {
+            try {
+                await navigator.clipboard.writeText(profileLink);
+                toast.success("Link copied to clipboard!");
+            } catch (error) {
+                console.error("Failed to copy link:", error);
+            }
+        }
     };
 
 
@@ -128,33 +151,38 @@ export const View = () => {
                                         Credentials of {nsid} ID
                                     </h1>
                                 </div>
+                                <div class="flex-col text-center mb-12">
+                                    <Button colorScheme='purple' size='lg' onClick={handleShare}>
+                                        Copy Profile Link
+                                    </Button>
+                                </div>
                                 {/* <Grid templateColumns="repeat(2, 1fr)" bg="white" alignItems={"center"} justifyContent={"center"} align={"center"} spacing={['4','8']} margin={['3','14']} gap={5}> */}
-                                    {/* <VStack bg="white" alignItems={"center"} justifyContent={"center"} align={"center"} spacing="4" margin='auto'> */}
-                                    <Flex style={{flexWrap:'wrap'}} alignItems={"center"} justifyContent={"center"} gap={['2','4']}>
-                                        {proofData.proofs.map((proof, index) => (
-                                            
-                                            <Card
-                                                borderWidth="1px"
-                                                borderRadius="lg"
-                                                key={index}
-                                                mb={4}
-                                                minW={["xs", "md"]}
-                                                maxW={["xs", "md"]}
-                                                minH={['70%','100%']}
-                                                maxH={['70%','100%']}
-                                                variant="elevated"
-                                                onClick={() => handleViewProof(proof)}
-                                                shadow={"lg"}
+                                {/* <VStack bg="white" alignItems={"center"} justifyContent={"center"} align={"center"} spacing="4" margin='auto'> */}
+                                <Flex style={{ flexWrap: 'wrap' }} alignItems={"center"} justifyContent={"center"} gap={['2', '4']}>
+                                    {proofData.proofs.map((proof, index) => (
 
-                                            >
-                                                <CardHeader>
-                                                    <VStack align='left' spacing='4'>
-                                                        <Heading size='md'>
-                                                            {proof.provider}
-                                                            <Badge ml='3' size='md' colorScheme='green'>
-                                                                Verified
-                                                            </Badge>
-                                                            {/* <Flex
+                                        <Card
+                                            borderWidth="1px"
+                                            borderRadius="lg"
+                                            key={index}
+                                            mb={4}
+                                            minW={["xs", "md"]}
+                                            maxW={["xs", "md"]}
+                                            minH={['70%', '100%']}
+                                            maxH={['70%', '100%']}
+                                            variant="elevated"
+                                            onClick={() => handleViewProof(proof)}
+                                            shadow={"lg"}
+
+                                        >
+                                            <CardHeader>
+                                                <VStack align='left' spacing='4'>
+                                                    <Heading size='md'>
+                                                        {proof.provider}
+                                                        <Badge ml='3' size='md' colorScheme='green'>
+                                                            Verified
+                                                        </Badge>
+                                                        {/* <Flex
                                                             position="absolute"
                                                             top="1"
                                                             right="1"
@@ -168,14 +196,14 @@ export const View = () => {
                                                                 onClick={() => toggleCollapse(index)}
                                                             />
                                                         </Flex> */}
-                                                        </Heading>
-                                                        <Heading size='sm'>
-                                                            {proof.parameters}
-                                                        </Heading>
+                                                    </Heading>
+                                                    <Heading size='sm'>
+                                                        {proof.parameters}
+                                                    </Heading>
 
-                                                    </VStack>
-                                                </CardHeader>
-                                                {/* <CardBody>
+                                                </VStack>
+                                            </CardHeader>
+                                            {/* <CardBody>
                                                 <Collapse
                                                     in={collapsedCards[index]}
                                                 >
@@ -264,110 +292,110 @@ export const View = () => {
                                                     </Stack>
                                                 </Collapse>
                                             </CardBody> */}
-                                            </Card>
-                                        ))}
-                                        {selectedProof !== null && (
-                                            <Modal isOpen={isModalOpen} onClose={closeModal} scrollBehavior="inside">
-                                                <ModalOverlay />
-                                                <ModalContent>
-                                                    <ModalHeader>{selectedProof.provider}</ModalHeader>
-                                                    <ModalCloseButton />
-                                                    <ModalBody>
-                                                        <Stack divider={<StackDivider />} spacing='4'>
-                                                            <Box>
-                                                                <Heading size='xs' textTransform='uppercase'>
-                                                                    Claim Id
-                                                                </Heading>
-                                                                <Text pt='2' fontSize='sm'>
-                                                                    {selectedProof.templateClaimId}
-                                                                </Text>
-                                                            </Box>
-                                                            <Box>
-                                                                <Heading size='xs' textTransform='uppercase'>
-                                                                    Parameters
-                                                                </Heading>
-                                                                <Text pt='2' fontSize='sm'>
-                                                                    {selectedProof.parameters}
-                                                                </Text>
-                                                            </Box>
-                                                            <Box>
-                                                                <Heading size='xs' textTransform='uppercase'>
-                                                                    Owner Public Key
-                                                                </Heading>
-                                                                <Text pt='2' fontSize='sm'>
-                                                                    {selectedProof.ownerPublicKey}
-                                                                </Text>
-                                                            </Box>
-                                                            <Box>
-                                                                <Heading size='xs' textTransform='uppercase'>
-                                                                    Timestamp
-                                                                </Heading>
-                                                                <Text pt='2' fontSize='sm'>
-                                                                    {selectedProof.timestampS}
-                                                                </Text>
-                                                            </Box>
-                                                            <Box>
-                                                                <Heading size='xs' textTransform='uppercase'>
-                                                                    Witness Addresses
-                                                                </Heading>
-                                                                <Text pt='2' fontSize='sm'>
-                                                                    {selectedProof.witnessAddresses}
-                                                                </Text>
-                                                            </Box>
-                                                            <Box>
-                                                                <Heading size='xs' textTransform='uppercase'>
-                                                                    Signatures
-                                                                </Heading>
-                                                                <Text pt='2' fontSize='sm'>
-                                                                    {selectedProof.signatures}
-                                                                </Text>
-                                                            </Box>
-                                                            <Box>
-                                                                <Heading size='xs' textTransform='uppercase'>
-                                                                    Redacted Parameters
-                                                                </Heading>
-                                                                <Text pt='2' fontSize='sm'>
-                                                                    {selectedProof.redactedParameters}
-                                                                </Text>
-                                                            </Box>
-                                                            <Box>
-                                                                <Heading size='xs' textTransform='uppercase'>
-                                                                    Context
-                                                                </Heading>
-                                                                <Text pt='2' fontSize='sm'>
-                                                                    {selectedProof.context}
-                                                                </Text>
-                                                            </Box>
-                                                            <Box>
-                                                                <Heading size='xs' textTransform='uppercase'>
-                                                                    Epoch
-                                                                </Heading>
-                                                                <Text pt='2' fontSize='sm'>
-                                                                    {selectedProof.epoch}
-                                                                </Text>
-                                                            </Box>
-                                                            <Box>
-                                                                <Heading size='xs' textTransform='uppercase'>
-                                                                    Identifier
-                                                                </Heading>
-                                                                <Text pt='2' fontSize='sm'>
-                                                                    {selectedProof.identifier}
-                                                                </Text>
-                                                            </Box>
+                                        </Card>
+                                    ))}
+                                    {selectedProof !== null && (
+                                        <Modal isOpen={isModalOpen} onClose={closeModal} scrollBehavior="inside">
+                                            <ModalOverlay />
+                                            <ModalContent>
+                                                <ModalHeader>{selectedProof.provider}</ModalHeader>
+                                                <ModalCloseButton />
+                                                <ModalBody>
+                                                    <Stack divider={<StackDivider />} spacing='4'>
+                                                        <Box>
+                                                            <Heading size='xs' textTransform='uppercase'>
+                                                                Claim Id
+                                                            </Heading>
+                                                            <Text pt='2' fontSize='sm'>
+                                                                {selectedProof.templateClaimId}
+                                                            </Text>
+                                                        </Box>
+                                                        <Box>
+                                                            <Heading size='xs' textTransform='uppercase'>
+                                                                Parameters
+                                                            </Heading>
+                                                            <Text pt='2' fontSize='sm'>
+                                                                {selectedProof.parameters}
+                                                            </Text>
+                                                        </Box>
+                                                        <Box>
+                                                            <Heading size='xs' textTransform='uppercase'>
+                                                                Owner Public Key
+                                                            </Heading>
+                                                            <Text pt='2' fontSize='sm'>
+                                                                {selectedProof.ownerPublicKey}
+                                                            </Text>
+                                                        </Box>
+                                                        <Box>
+                                                            <Heading size='xs' textTransform='uppercase'>
+                                                                Timestamp
+                                                            </Heading>
+                                                            <Text pt='2' fontSize='sm'>
+                                                                {selectedProof.timestampS}
+                                                            </Text>
+                                                        </Box>
+                                                        <Box>
+                                                            <Heading size='xs' textTransform='uppercase'>
+                                                                Witness Addresses
+                                                            </Heading>
+                                                            <Text pt='2' fontSize='sm'>
+                                                                {selectedProof.witnessAddresses}
+                                                            </Text>
+                                                        </Box>
+                                                        <Box>
+                                                            <Heading size='xs' textTransform='uppercase'>
+                                                                Signatures
+                                                            </Heading>
+                                                            <Text pt='2' fontSize='sm'>
+                                                                {selectedProof.signatures}
+                                                            </Text>
+                                                        </Box>
+                                                        <Box>
+                                                            <Heading size='xs' textTransform='uppercase'>
+                                                                Redacted Parameters
+                                                            </Heading>
+                                                            <Text pt='2' fontSize='sm'>
+                                                                {selectedProof.redactedParameters}
+                                                            </Text>
+                                                        </Box>
+                                                        <Box>
+                                                            <Heading size='xs' textTransform='uppercase'>
+                                                                Context
+                                                            </Heading>
+                                                            <Text pt='2' fontSize='sm'>
+                                                                {selectedProof.context}
+                                                            </Text>
+                                                        </Box>
+                                                        <Box>
+                                                            <Heading size='xs' textTransform='uppercase'>
+                                                                Epoch
+                                                            </Heading>
+                                                            <Text pt='2' fontSize='sm'>
+                                                                {selectedProof.epoch}
+                                                            </Text>
+                                                        </Box>
+                                                        <Box>
+                                                            <Heading size='xs' textTransform='uppercase'>
+                                                                Identifier
+                                                            </Heading>
+                                                            <Text pt='2' fontSize='sm'>
+                                                                {selectedProof.identifier}
+                                                            </Text>
+                                                        </Box>
 
-                                                        </Stack>
-                                                    </ModalBody>
-                                                    <ModalFooter>
-                                                        <Button colorScheme='blue' mr={3} onClick={closeModal}>
-                                                            Close
-                                                        </Button>
-                                                    </ModalFooter>
-                                                </ModalContent>
+                                                    </Stack>
+                                                </ModalBody>
+                                                <ModalFooter>
+                                                    <Button colorScheme='blue' mr={3} onClick={closeModal}>
+                                                        Close
+                                                    </Button>
+                                                </ModalFooter>
+                                            </ModalContent>
 
-                                            </Modal>
-                                        )}
-                                    </Flex>
-                                    {/* </VStack> */}
+                                        </Modal>
+                                    )}
+                                </Flex>
+                                {/* </VStack> */}
                                 {/* </Grid> */}
                             </>
                         )}
