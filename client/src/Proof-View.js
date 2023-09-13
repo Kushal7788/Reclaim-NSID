@@ -1,9 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { QRCodeSVG } from "qrcode.react";
 import { useState, useEffect } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import { ChakraProvider, Grid } from '@chakra-ui/react'
-import { TriangleDownIcon } from '@chakra-ui/icons'
 import {
     Card, CardHeader, CardBody, Collapse, Button,
     VStack, Heading, Text, Box, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton,
