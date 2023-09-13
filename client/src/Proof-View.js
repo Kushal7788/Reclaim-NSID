@@ -14,8 +14,9 @@ import {
 export const ProofView = () => {
     let { nsid } = useParams();
     const apiUrl = process.env.REACT_APP_API_URL;
-    const clientUrl = process.env.REACT_APP_CLIENT_URL;
-    const profileLink = `${clientUrl}/view/${nsid}`;
+    const baseUrl = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ""
+    }`;
+    const profileLink = `${baseUrl}/view/${nsid}`;
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [proofData, setProofData] = useState(null);
     const [isVerified, setIsVerified] = useState(null);
