@@ -13,7 +13,7 @@ export const ProofView = () => {
     let { nsid } = useParams();
     const apiUrl = process.env.REACT_APP_API_URL;
     const baseUrl = `${window.location.protocol}//${window.location.hostname}${window.location.port ? `:${window.location.port}` : ""
-    }`;
+        }`;
     const profileLink = `${baseUrl}/view/${nsid}`;
     const { isOpen, onOpen, onClose } = useDisclosure();
     const [proofData, setProofData] = useState(null);
@@ -70,24 +70,52 @@ export const ProofView = () => {
     };
 
     const handleShare = async () => {
-        if (navigator.share) {
-            try {
-                await navigator.share({
-                    title: "Share verification link",
-                    text: "verification link",
-                    url: `${profileLink}`,
-                });
-            } catch (err) {
-                console.log(err);
-            }
-        } else {
-            try {
-                await navigator.clipboard.writeText(profileLink);
-                toast.success("Link copied to clipboard!");
-            } catch (error) {
-                console.error("Failed to copy link:", error);
-            }
+        try {
+
+            // Create a temporary input element
+            const tempInput = document.createElement('input');
+
+            // Set the input's value to the link you want to copy
+            tempInput.value = profileLink;
+
+            // Append the input element to the document
+            document.body.appendChild(tempInput);
+
+            // Select the input's text
+            tempInput.select();
+
+            // Copy the selected text to the clipboard
+            document.execCommand('copy');
+
+            // Remove the temporary input element
+            document.body.removeChild(tempInput);
+
+            toast.success("Link copied to clipboard!");
+        } catch (err) {
+            console.error("Failed to copy link:", err);
+            toast.error("Failed to copy link!");
         }
+
+        // Optionally, you can provide some user feedback
+        // alert('Link copied to clipboard: ' + link);
+        // if (navigator.share) {
+        //     try {
+        //         await navigator.share({
+        //             title: "Share verification link",
+        //             text: "verification link",
+        //             url: `${profileLink}`,
+        //         });
+        //     } catch (err) {
+        //         console.log(err);
+        //     }
+        // } else {
+        //     try {
+        //         await navigator.clipboard.writeText(profileLink);
+        //         toast.success("Link copied to clipboard!");
+        //     } catch (error) {
+        //         console.error("Failed to copy link:", error);
+        //     }
+        // }
     };
 
 
@@ -151,9 +179,10 @@ export const ProofView = () => {
                                     </h1>
                                 </div>
                                 <div class="flex-col text-center mb-12">
-                                    <Button colorScheme='purple' size='lg' onClick={handleShare}>
+                                    <button class="inline-flex text-white bg-purple-500 border-0 py-2 px-6 focus:outline-none hover:bg-purple-600 rounded text-lg" onClick={handleShare}>
+                                        {/* <Button colorScheme='purple' size='lg' onClick={handleShare}> */}
                                         Copy Profile Link
-                                    </Button>
+                                    </button>
                                 </div>
                                 {/* <Grid templateColumns="repeat(2, 1fr)" bg="white" alignItems={"center"} justifyContent={"center"} align={"center"} spacing={['4','8']} margin={['3','14']} gap={5}> */}
                                 {/* <VStack bg="white" alignItems={"center"} justifyContent={"center"} align={"center"} spacing="4" margin='auto'> */}
@@ -202,95 +231,6 @@ export const ProofView = () => {
 
                                                 </VStack>
                                             </CardHeader>
-                                            {/* <CardBody>
-                                                <Collapse
-                                                    in={collapsedCards[index]}
-                                                >
-                                                    <Stack divider={<StackDivider />} spacing='4'>
-                                                        <Box>
-                                                            <Heading size='xs' textTransform='uppercase'>
-                                                                Claim Id
-                                                            </Heading>
-                                                            <Text pt='2' fontSize='sm'>
-                                                                {proof.templateClaimId}
-                                                            </Text>
-                                                        </Box>
-                                                        <Box>
-                                                            <Heading size='xs' textTransform='uppercase'>
-                                                                Parameters
-                                                            </Heading>
-                                                            <Text pt='2' fontSize='sm'>
-                                                                {proof.parameters}
-                                                            </Text>
-                                                        </Box>
-                                                        <Box>
-                                                            <Heading size='xs' textTransform='uppercase'>
-                                                                Owner Public Key
-                                                            </Heading>
-                                                            <Text pt='2' fontSize='sm'>
-                                                                {proof.ownerPublicKey}
-                                                            </Text>
-                                                        </Box>
-                                                        <Box>
-                                                            <Heading size='xs' textTransform='uppercase'>
-                                                                Timestamp
-                                                            </Heading>
-                                                            <Text pt='2' fontSize='sm'>
-                                                                {proof.timestampS}
-                                                            </Text>
-                                                        </Box>
-                                                        <Box>
-                                                            <Heading size='xs' textTransform='uppercase'>
-                                                                Witness Addresses
-                                                            </Heading>
-                                                            <Text pt='2' fontSize='sm'>
-                                                                {proof.witnessAddresses}
-                                                            </Text>
-                                                        </Box>
-                                                        <Box>
-                                                            <Heading size='xs' textTransform='uppercase'>
-                                                                Signatures
-                                                            </Heading>
-                                                            <Text pt='2' fontSize='sm'>
-                                                                {proof.signatures}
-                                                            </Text>
-                                                        </Box>
-                                                        <Box>
-                                                            <Heading size='xs' textTransform='uppercase'>
-                                                                Redacted Parameters
-                                                            </Heading>
-                                                            <Text pt='2' fontSize='sm'>
-                                                                {proof.redactedParameters}
-                                                            </Text>
-                                                        </Box>
-                                                        <Box>
-                                                            <Heading size='xs' textTransform='uppercase'>
-                                                                Context
-                                                            </Heading>
-                                                            <Text pt='2' fontSize='sm'>
-                                                                {proof.context}
-                                                            </Text>
-                                                        </Box>
-                                                        <Box>
-                                                            <Heading size='xs' textTransform='uppercase'>
-                                                                Epoch
-                                                            </Heading>
-                                                            <Text pt='2' fontSize='sm'>
-                                                                {proof.epoch}
-                                                            </Text>
-                                                        </Box>
-                                                        <Box>
-                                                            <Heading size='xs' textTransform='uppercase'>
-                                                                Identifier
-                                                            </Heading>
-                                                            <Text pt='2' fontSize='sm'>
-                                                                {proof.identifier}
-                                                            </Text>
-                                                        </Box>
-
-                                                    </Stack>
-                                                </Collapse>
-                                            </CardBody> */}
                                         </Card>
                                     ))}
                                     {selectedProof !== null && (
