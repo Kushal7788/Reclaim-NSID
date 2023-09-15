@@ -125,7 +125,7 @@ router.post("/update/proof", async (req, res) => {
       proofs: check.data.proofs,
     };
     await nsId.save();
-    const url = process.env.CLIENT_URL + "/proof-view/" + check.data.nsId;
+    const url = `${process.env.CLIENT_URL}/proof-view/${check.data.nsId}`;
     const htmlPage = `
     <!DOCTYPE html>
 <html lang="en">
@@ -218,13 +218,19 @@ router.post("/update/proof", async (req, res) => {
 </html>
     `
     res.status(201).send(`
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
     <script>
-        // Define the URL you want to redirect to
-        const linkToOpen = '${url}'; // Replace with your URL
-
-        // Use window.location to redirect to the specified URL
-        window.location.href = linkToOpen;
+    window.location.href = '${url}';
     </script>
+    </head>
+    <body>
+    <h1>Redirecting...</h1>
+    <p>The location.href method redirects the user to a new webpage: '${url}'</p>
+
+    </body>
+    </html>
     `);
   } catch (err) {
     console.log(err);
